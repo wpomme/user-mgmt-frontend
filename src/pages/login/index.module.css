@@ -1,0 +1,10 @@
+.main {
+  width: 720px;
+  margin: 0 auto;
+}
+
+.textbox {
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+}
