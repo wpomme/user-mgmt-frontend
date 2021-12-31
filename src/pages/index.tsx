@@ -81,13 +81,24 @@ const Index: NextPage = () => {
 
       <Layout>
         <main className={styles.main}>
-          {data.data.map((user: any, i: number) => (
-            <div key={i}>
-              <span>{user.id}</span>
-              <span>{user.email}</span>
-              <span>{user.name}</span>
-            </div>
-          ))}
+          <table>
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>Email</td>
+                <td>Name</td>
+              </tr>
+            </thead>
+            <tbody>
+              {data.data.map((user: any, i: number) => (
+                <tr key={i}>
+                  <td>{user.id}</td>
+                  <td>{user.email}</td>
+                  <td>{user.name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </main>
       </Layout>
     </>
