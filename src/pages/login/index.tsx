@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 const Login: NextPage = () => {
   const [email, setName] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState<Error | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -31,12 +32,18 @@ const Login: NextPage = () => {
       }
     )
 
+    const result = await res.json()
+
     if (res.status === 200) {
-      const result = await res.json()
       sessionStorage.setItem('accessToken', result.access_token)
       router.push('/')
     }
+
+    if (res.status >= 400) {
+      setError(result)
+    }
   }
+
   return (
     <>
       <Head>
@@ -45,6 +52,7 @@ const Login: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        {error && <div className={styles.error}>{error.message}</div>}
         <form
           className={styles.form}
           method="POST"
@@ -77,7 +85,7 @@ const Login: NextPage = () => {
                 required
               />
             </div>
-            <button type="submit">Login</button>
+            <button className={styles["button"]} type="submit">Login</button>
           </div>
         </form>
       </main>

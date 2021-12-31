@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from './index.module.css'
 import { AppContext } from '../context/App'
+import Link from 'next/link'
 
 const fetchUsers = async (accessToken: string) => {
   const res = await fetch(
@@ -16,17 +17,25 @@ const fetchUsers = async (accessToken: string) => {
     }
   )
 
+  const result = await res.json()
+
   if (res.status === 200) {
-    const result = await res.json()
     return { data: result, error: null }
   }
 
-  return { data: null, error: Error('res.status is not 200. fetch Users') }
+  console.error(result)
+  return { data: null, error: result }
 }
 
+interface FetchUsersError extends Error {
+  expiredAt?: string
+  date?: string
+}
+
+// TODO accessTokenが空の時がある
 const Index: NextPage = () => {
   const [data, setData] = useState<any>(null)
-  const [error, setError] = useState<any>(null)
+  const [error, setError] = useState<FetchUsersError | null>(null)
   const context = useContext(AppContext)
 
   useEffect(() => {
@@ -36,14 +45,22 @@ const Index: NextPage = () => {
       setError(error)
     }
 
-    if (!data) {
+    if (!data && !error && context.accessToken) {
       fetchUsersInUseEffect(context.accessToken ? context.accessToken : "")
     }
   }, [data, error, context.accessToken])
 
   if (error) {
     return (
-      <div>Error!</div>
+      <>
+        <div>Error!</div>
+        {error.name === 'TokenExpiredError' && (
+          <>
+            <p>ログイン期限が切れています。ログインし直してください。</p>
+            <p><Link href="/login">ログイン</Link></p>
+          </>
+        )}
+      </>
     )
   }
 
