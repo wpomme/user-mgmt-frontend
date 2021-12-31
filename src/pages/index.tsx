@@ -91,7 +91,9 @@ const Index: NextPage = () => {
           <tbody>
             {data.data.map((user: any, i: number) => (
               <tr key={i}>
-                <td>{user.id}</td>
+                <td>
+                  <a href={`/users/${user.id}`}>{user.id}</a>
+                </td>
                 <td>{user.email}</td>
                 <td>{user.name}</td>
               </tr>
