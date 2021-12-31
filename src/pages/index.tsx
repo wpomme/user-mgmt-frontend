@@ -80,26 +80,24 @@ const Index: NextPage = () => {
       </Head>
 
       <Layout>
-        <main className={styles.main}>
-          <table>
-            <thead>
-              <tr>
-                <td>ID</td>
-                <td>Email</td>
-                <td>Name</td>
+        <table>
+          <thead>
+            <tr>
+              <td>ID</td>
+              <td>Email</td>
+              <td>Name</td>
+            </tr>
+          </thead>
+          <tbody>
+            {data.data.map((user: any, i: number) => (
+              <tr key={i}>
+                <td>{user.id}</td>
+                <td>{user.email}</td>
+                <td>{user.name}</td>
               </tr>
-            </thead>
-            <tbody>
-              {data.data.map((user: any, i: number) => (
-                <tr key={i}>
-                  <td>{user.id}</td>
-                  <td>{user.email}</td>
-                  <td>{user.name}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </main>
+            ))}
+          </tbody>
+        </table>
       </Layout>
     </>
   )

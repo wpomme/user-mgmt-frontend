@@ -1,3 +1,10 @@
 .layout-side-bar {
-  display: flex;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+
+.main {
+  margin: 40px auto 0;
+  width: var(--main-contents-width);
 }

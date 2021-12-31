@@ -3,4 +3,7 @@
   --main-bg-color: darkGreen;
   --main-text-color: black;
   --light-text-color: white;
+
+  /* size */
+  --main-contents-width: 720px;
 }

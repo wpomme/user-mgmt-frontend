@@ -9,7 +9,9 @@ export const Layout: FC = ({ children }) => {
       <Header />
       <div className={styles['layout-side-bar']}>
         <SideBar />
-        { children }
+        <main className={styles['main']}>
+          { children }
+        </main>
       </div>
     </>
   );
