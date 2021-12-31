@@ -1,0 +1,15 @@
+.header {
+  background-color: var(--main-bg-color);
+  color: var(--light-text-color);
+  display: flex;
+  padding: 0  24px;
+}
+
+.title {
+  margin-right: auto;
+}
+
+.header-right {
+  display: grid;
+  place-content: center;
+}

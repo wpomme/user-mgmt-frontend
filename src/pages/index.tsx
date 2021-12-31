@@ -4,6 +4,7 @@ import Head from 'next/head'
 import styles from './index.module.css'
 import { AppContext } from '../context/App'
 import Link from 'next/link'
+import { Layout } from '../components/templates/Layout'
 
 const fetchUsers = async (accessToken: string) => {
   const res = await fetch(
@@ -78,15 +79,17 @@ const Index: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        {data.data.map((user: any, i: number) => (
-          <div key={i}>
-            <span>{user.id}</span>
-            <span>{user.email}</span>
-            <span>{user.name}</span>
-          </div>
-        ))}
-      </main>
+      <Layout>
+        <main className={styles.main}>
+          {data.data.map((user: any, i: number) => (
+            <div key={i}>
+              <span>{user.id}</span>
+              <span>{user.email}</span>
+              <span>{user.name}</span>
+            </div>
+          ))}
+        </main>
+      </Layout>
     </>
   )
 }

@@ -1,0 +1,7 @@
+.side-bar {
+  background-color: var(--main-bg-color);
+  color: var(--light-text-color);
+  height: 100vh;
+  padding: 0 24px;
+}
+
