@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Fetcher, SuccessResponse, ErrorResponse } from '../api'
+import { Fetcher, SuccessResponse, ErrorResponse } from '../types'
 
 export function useFetch<Data> (fetcher: Fetcher<Data>) {
   const [data, setData] = useState<SuccessResponse<Data> | null>(null)

@@ -1,4 +1,4 @@
-import { Fetcher } from './types'
+import { Fetcher } from '../types'
 
 export const fetchUsers: Fetcher<any> = async (accessToken: string) => {
   const res = await fetch(
