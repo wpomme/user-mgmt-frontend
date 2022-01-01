@@ -72,6 +72,7 @@ const User: NextPage = () => {
             <div>{data.data.id}</div>
             <div>{data.data.email}</div>
             <div>{data.data.name}</div>
+            <div>{data.data.userStatus.userStatus}</div>
           </>
         )}
       </Layout>
