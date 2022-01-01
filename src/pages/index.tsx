@@ -7,7 +7,19 @@ import { Layout } from '../components/templates/Layout'
 import { Loading } from '../components/atoms/Loading'
 import { ErrorMessage } from '../components/atoms/ErrorMessage'
 
-const fetchUsers = async (accessToken: string) => {
+interface SuccessResponse<Data> {
+  data: Data
+}
+
+interface ErrorResponse extends Error {
+  expiredAt?: string
+  date?: string
+}
+
+type Fetcher<Data> = (accessToken: string) =>
+  Promise<{ data: SuccessResponse<Data>, error: null } | { data: null, error: ErrorResponse }>
+
+const fetchUsers: Fetcher<any> = async (accessToken: string) => {
   const res = await fetch(
     'http://localhost:4000/api/v1/users',
     {
@@ -29,15 +41,9 @@ const fetchUsers = async (accessToken: string) => {
   return { data: null, error: result }
 }
 
-interface FetchUsersError extends Error {
-  expiredAt?: string
-  date?: string
-}
-
-type Fetcher = (accessToken: string) => Promise<{ data: any, error: any }>
-
-const useFetch = (fetcher: Fetcher) => {
-  const [data, setData] = useState<Response | null>(null)
+function useFetch<Data> (fetcher: Fetcher<Data>) {
+// const useFetch = (fetcher: Fetcher<Data>) => {
+  const [data, setData] = useState<SuccessResponse<Data> | null>(null)
   const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
