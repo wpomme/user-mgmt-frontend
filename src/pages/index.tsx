@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from './index.module.css'
-import { AppContext } from '../context/App'
 import Link from 'next/link'
 import { Layout } from '../components/templates/Layout'
 
@@ -37,7 +36,7 @@ interface FetchUsersError extends Error {
 const Index: NextPage = () => {
   const [data, setData] = useState<any>(null)
   const [error, setError] = useState<FetchUsersError | null>(null)
-  const context = useContext(AppContext)
+  // const context = useContext(AppContext)
 
   useEffect(() => {
     const fetchUsersInUseEffect = async (accessToken: string) => {
@@ -46,10 +45,12 @@ const Index: NextPage = () => {
       setError(error)
     }
 
-    if (!data && !error && context.accessToken) {
-      fetchUsersInUseEffect(context.accessToken ? context.accessToken : "")
+    const accessToken = sessionStorage.getItem('accessToken')
+
+    if (!data && !error && accessToken) {
+      fetchUsersInUseEffect(accessToken ? accessToken : "")
     }
-  }, [data, error, context.accessToken])
+  }, [data, error])
 
   if (error) {
     return (

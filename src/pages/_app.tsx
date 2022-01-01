@@ -1,15 +1,24 @@
+import { useEffect } from 'react';
 import '../styles/variables.css'
 import '../styles/reset.css'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { AppProvider } from '../context/App'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
+
+  useEffect(() => {
+    if (router.pathname === "/login") return
+    if (router.pathname === "/logout") return
+
+    const storageToken = sessionStorage.getItem('accessToken')
+    if (!storageToken) {
+      router.push('/login')
+    }
+
+  }, [router])
 
   return (
-    <AppProvider>
-      <Component {...pageProps} />
-    </AppProvider>
+    <Component {...pageProps} />
   )
 }
 

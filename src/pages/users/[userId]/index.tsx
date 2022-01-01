@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Layout } from '../../../components/templates/Layout'
-import { AppContext } from '../../../context/App'
 import { useRouter } from 'next/router';
 
 const fetchUserById = async (accessToken: string, userId: number) => {
@@ -36,7 +35,6 @@ const User: NextPage = () => {
   const router = useRouter()
   const [data, setData] = useState<any>(null)
   const [error, setError] = useState<FetchUsersError | null>(null)
-  const context = useContext(AppContext)
   const { userId } = router.query
   const id = Number(userId)
 
@@ -47,10 +45,12 @@ const User: NextPage = () => {
       setError(error)
     }
 
-    if (!data && !error && context.accessToken) {
-      fetchUserByIdInUseEffect(context.accessToken, id)
+    const accessToken = sessionStorage.getItem('accessToken')
+
+    if (!data && !error && accessToken) {
+      fetchUserByIdInUseEffect(accessToken, id)
     }
-  }, [data, error, context.accessToken, id])
+  }, [data, error, id])
 
   console.log(data)
  
@@ -72,7 +72,6 @@ const User: NextPage = () => {
             <div>{data.data.id}</div>
             <div>{data.data.email}</div>
             <div>{data.data.name}</div>
-            <div>{data.data.userStatus.userStatus}</div>
           </>
         )}
       </Layout>
