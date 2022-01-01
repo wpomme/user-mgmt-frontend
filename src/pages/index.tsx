@@ -34,24 +34,30 @@ interface FetchUsersError extends Error {
   date?: string
 }
 
-// TODO accessTokenが空の時がある
-const Index: NextPage = () => {
-  const [data, setData] = useState<any>(null)
-  const [error, setError] = useState<FetchUsersError | null>(null)
+type Fetcher = (accessToken: string) => Promise<{ data: any, error: any }>
+
+const useFetch = (fetcher: Fetcher) => {
+  const [data, setData] = useState<Response | null>(null)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
-    const fetchUsersInUseEffect = async (accessToken: string) => {
-      const { data, error } = await fetchUsers(accessToken)
+    const fetchInUseEffect = async (accessToken: string) => {
+      const { data, error } = await fetcher(accessToken)
       setData(data)
       setError(error)
     }
-
     const accessToken = sessionStorage.getItem('accessToken')
 
     if (!data && !error && accessToken) {
-      fetchUsersInUseEffect(accessToken ? accessToken : "")
+      fetchInUseEffect(accessToken ? accessToken : "")
     }
-  }, [data, error])
+  }, [data, error, fetcher])
+
+  return { data, error }
+}
+
+const Index: NextPage = () => {
+  const { data, error } = useFetch(fetchUsers)
 
   if (error) {
     return <ErrorMessage {...error} />
