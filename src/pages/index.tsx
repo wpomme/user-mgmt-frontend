@@ -4,6 +4,8 @@ import Head from 'next/head'
 import styles from './index.module.css'
 import Link from 'next/link'
 import { Layout } from '../components/templates/Layout'
+import { Loading } from '../components/atoms/Loading'
+import { ErrorMessage } from '../components/atoms/ErrorMessage'
 
 const fetchUsers = async (accessToken: string) => {
   const res = await fetch(
@@ -36,7 +38,6 @@ interface FetchUsersError extends Error {
 const Index: NextPage = () => {
   const [data, setData] = useState<any>(null)
   const [error, setError] = useState<FetchUsersError | null>(null)
-  // const context = useContext(AppContext)
 
   useEffect(() => {
     const fetchUsersInUseEffect = async (accessToken: string) => {
@@ -53,24 +54,10 @@ const Index: NextPage = () => {
   }, [data, error])
 
   if (error) {
-    return (
-      <>
-        <div>Error!</div>
-        {error.name === 'TokenExpiredError' && (
-          <>
-            <p>ログイン期限が切れています。ログインし直してください。</p>
-            <p><Link href="/login">ログイン</Link></p>
-          </>
-        )}
-      </>
-    )
+    return <ErrorMessage {...error} />
   }
 
-  if (!data) {
-    return (
-      <div>Loading...</div>
-    )
-  }
+  if (!data) return <Loading />
 
   return (
     <>
