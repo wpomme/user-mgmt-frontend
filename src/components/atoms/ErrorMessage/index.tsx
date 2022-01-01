@@ -13,6 +13,11 @@ export const ErrorMessage: VFC<Error> = (props) => {
           <p><Link href="/login">ログイン</Link></p>
         </>
       )}
+      {name === 'UserNotFoundError' || name === 'ParamIsNaNError' && (
+        <>
+          <p>指定したIDのユーザーが見つかりませんでした。</p>
+        </>
+      )}
     </>
   );
 }

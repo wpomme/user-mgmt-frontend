@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Layout } from '../../../components/templates/Layout'
 import { useRouter } from 'next/router';
+import { ErrorMessage } from '../../../components/atoms/ErrorMessage'
 
 const fetchUserById = async (accessToken: string, userId: number) => {
   const res = await fetch(
@@ -61,12 +62,7 @@ const User: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        {isNaN(id) && (
-          <>
-            <div>Error!</div>
-            <div>404</div>
-          </>
-        )}
+        {error && <ErrorMessage {...error} />}
         {data && (
           <>
             <div>{data.data.id}</div>
