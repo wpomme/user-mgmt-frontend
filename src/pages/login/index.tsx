@@ -4,6 +4,9 @@ import Head from 'next/head'
 import styles from './index.module.css'
 import { useRouter } from 'next/router'
 
+const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT
+const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN
+
 const Login: NextPage = () => {
   const [email, setName] = useState("")
   const [password, setPassword] = useState("")
@@ -19,7 +22,7 @@ const Login: NextPage = () => {
     event.preventDefault()
 
     const res = await fetch(
-      'http://localhost:4000/api/v1/login',
+      `http://${backendDomain}:${backendPort}/api/v1/login`,
       {
         method: 'POST',
         headers: {

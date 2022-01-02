@@ -5,9 +5,12 @@ import { Layout } from '../../../components/templates/Layout'
 import { useRouter } from 'next/router';
 import { ErrorMessage } from '../../../components/atoms/ErrorMessage'
 
+const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT
+const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN
+
 const fetchUserById = async (accessToken: string, userId: number) => {
   const res = await fetch(
-    `http://localhost:4000/api/v1/users/${userId}`,
+    `http://${backendDomain}:${backendPort}/api/v1/users/${userId}`,
     {
       method: 'GET',
       headers: {
