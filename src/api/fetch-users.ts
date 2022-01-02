@@ -3,7 +3,7 @@ import { Fetcher } from '../types'
 const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT
 const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN
 
-export const fetchUsers: Fetcher<any> = async (accessToken: string) => {
+export const fetchUsers: Fetcher<any, never> = async (accessToken: string) => {
   const res = await fetch(
     `http://${backendDomain}:${backendPort}/api/v1/users`,
     {

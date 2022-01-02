@@ -1,5 +1,5 @@
-export interface SuccessResponse<Data> {
-  data: Data
+export interface SuccessResponse<DATA> {
+  data: DATA
 }
 
 export interface ErrorResponse extends Error {
@@ -7,6 +7,6 @@ export interface ErrorResponse extends Error {
   date?: string
 }
 
-export type Fetcher<Data> = (accessToken: string) =>
-  Promise<{ data: SuccessResponse<Data>, error: null } | { data: null, error: ErrorResponse }>
+export type Fetcher<DATA, ARGS extends unknown[]> = (accessToken: string, ...args: ARGS) =>
+  Promise<{ data: SuccessResponse<DATA>, error: null } | { data: null, error: ErrorResponse }>
 
