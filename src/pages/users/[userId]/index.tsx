@@ -4,60 +4,17 @@ import Head from 'next/head'
 import { Layout } from '../../../components/templates/Layout'
 import { useRouter } from 'next/router';
 import { ErrorMessage } from '../../../components/atoms/ErrorMessage'
-
-const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT
-const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN
-
-const fetchUserById = async (accessToken: string, userId: number) => {
-  const res = await fetch(
-    `http://${backendDomain}:${backendPort}/api/v1/users/${userId}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
-      },
-    }
-  )
-
-  const result = await res.json()
-
-  if (res.status === 200) {
-    return { data: result, error: null }
-  }
-
-  console.error(result)
-  return { data: null, error: result }
-}
-
-interface FetchUsersError extends Error {
-  expiredAt?: string
-  date?: string
-}
+import { fetchUserById } from '../../../api/fetch-user-by-id'
+import { useFetch } from '../../../hooks/use-fetch'
 
 const User: NextPage = () => {
   const router = useRouter()
-  const [data, setData] = useState<any>(null)
-  const [error, setError] = useState<FetchUsersError | null>(null)
   const { userId } = router.query
+  // TODO 最初の方のデータフェッチでNaNになることがあるので修正する
   const id = Number(userId)
 
-  useEffect(() => {
-    const fetchUserByIdInUseEffect = async (accessToken: string, id: number) => {
-      const { data, error } = await fetchUserById(accessToken, id)
-      setData(data)
-      setError(error)
-    }
+  const { data, error } = useFetch(fetchUserById, id)
 
-    const accessToken = sessionStorage.getItem('accessToken')
-
-    if (!data && !error && accessToken) {
-      fetchUserByIdInUseEffect(accessToken, id)
-    }
-  }, [data, error, id])
-
-  console.log(data)
- 
   return (
     <>
       <Head>
