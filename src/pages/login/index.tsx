@@ -1,9 +1,10 @@
-import { useState, useEffect, FormEvent } from 'react'
+import { useState, FormEvent } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from './index.module.css'
 import { useRouter } from 'next/router'
 
+// TODO loginUserを移動する
 const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT
 const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN
 
@@ -12,11 +13,6 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState("")
   const [error, setError] = useState<Error | null>(null)
   const router = useRouter()
-
-  useEffect(() => {
-    const accessToken = sessionStorage.getItem('accessToken')
-    console.log(accessToken)
-  }, [])
 
   const loginUser = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()

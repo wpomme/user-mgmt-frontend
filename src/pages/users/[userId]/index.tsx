@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Layout } from '../../../components/templates/Layout'
