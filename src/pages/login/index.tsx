@@ -33,13 +33,13 @@ const Login: NextPage = () => {
 
     const result = await res.json()
 
+    if (res.status >= 400) {
+      setError(result)
+    }
+
     if (res.status >= 200) {
       sessionStorage.setItem('accessToken', result.access_token)
       router.push('/')
-    }
-
-    if (res.status >= 400) {
-      setError(result)
     }
   }
 
