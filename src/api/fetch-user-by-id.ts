@@ -15,7 +15,7 @@ export const fetchUserById: Fetcher<any, [number]> = async (accessToken: string,
 
   const result = await res.json()
 
-  if (res.status === 200) {
+  if (res.status >= 200) {
     return { data: result, error: null }
   }
 

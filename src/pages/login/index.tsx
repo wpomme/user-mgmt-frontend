@@ -33,7 +33,7 @@ const Login: NextPage = () => {
 
     const result = await res.json()
 
-    if (res.status === 200) {
+    if (res.status >= 200) {
       sessionStorage.setItem('accessToken', result.access_token)
       router.push('/')
     }
