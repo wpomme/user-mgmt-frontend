@@ -1,7 +1,5 @@
 import { Fetcher } from '../types'
-
-const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT
-const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN
+import { backendPort, backendDomain } from '../const'
 
 export const fetchUserById: Fetcher<any, [number]> = async (accessToken: string, userId: number) => {
   const res = await fetch(
@@ -21,6 +19,5 @@ export const fetchUserById: Fetcher<any, [number]> = async (accessToken: string,
     return { data: result, error: null }
   }
 
-  console.error(result)
   return { data: null, error: result }
 }

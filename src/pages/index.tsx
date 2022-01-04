@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import styles from './index.module.css'
+// import styles from './index.module.css'
 import { Layout } from '../components/templates/Layout'
 import { Loading } from '../components/atoms/Loading'
 import { ErrorMessage } from '../components/atoms/ErrorMessage'
