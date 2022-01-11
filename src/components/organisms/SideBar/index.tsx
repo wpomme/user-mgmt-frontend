@@ -12,7 +12,7 @@ export const SideBar: VFC = () => {
           <Link href="/">一覧</Link>
         </li>
         <li className={styles['create-user']}>
-          <Link href="#">作成</Link>
+          <Link href="/users/create">作成</Link>
         </li>
         <li className={styles['create-user']}>
           <Link href="#">削除</Link>
