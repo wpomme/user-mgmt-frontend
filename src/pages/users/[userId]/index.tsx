@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { ErrorMessage } from '../../../components/atoms/ErrorMessage'
 import { fetchUserById } from '../../../api/fetch-user-by-id'
 import { useFetch } from '../../../hooks/use-fetch'
+import { userStatusMap } from '../../../const/index'
 
 const User: NextPage = () => {
   const router = useRouter()
@@ -13,6 +14,7 @@ const User: NextPage = () => {
   const id = Number(userId)
 
   const { data, error } = useFetch(fetchUserById, id)
+  console.log(data)
 
   return (
     <>
@@ -27,6 +29,7 @@ const User: NextPage = () => {
             <div>{data.data.id}</div>
             <div>{data.data.email}</div>
             <div>{data.data.name}</div>
+            <div>{data.data.userStatus ? userStatusMap.get(data.data.userStatus.userStatus) : "-"}</div>
           </>
         )}
       </Layout>

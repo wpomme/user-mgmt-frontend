@@ -6,6 +6,7 @@ import { Loading } from '../components/atoms/Loading'
 import { ErrorMessage } from '../components/atoms/ErrorMessage'
 import { fetchUsers } from '../api/fetch-users'
 import { useFetch } from '../hooks/use-fetch'
+import { userStatusMap } from '../const/index'
 
 const Index: NextPage = () => {
   const { data, error } = useFetch(fetchUsers)
@@ -33,6 +34,7 @@ const Index: NextPage = () => {
               <td>ID</td>
               <td>Email</td>
               <td>Name</td>
+              <td>Status</td>
             </tr>
           </thead>
           <tbody>
@@ -43,6 +45,7 @@ const Index: NextPage = () => {
                 </td>
                 <td>{user.email}</td>
                 <td>{user.name}</td>
+                <td>{user.userStatus ? userStatusMap.get(user.userStatus.userStatus) : "-"}</td>
               </tr>
             ))}
           </tbody>
