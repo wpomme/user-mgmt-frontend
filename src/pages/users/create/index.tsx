@@ -20,66 +20,60 @@ const CreateUser: NextPage = () => {
   }
 
   return (
-    <>
-      <Head>
-        <title>User Create</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Layout>
-        {/*TODO エラーの種類によってLayoutを描画するかどうか変更する*/}
-        {error && <ErrorMessage {...error} />}
-        <form
-          className={styles.form}
-          method="POST"
-          onSubmit={(ev) => {
-            createUser(accessToken, () => alert("success!"), setError, ev)
-          }}
-        >
-          <h1 className={styles.title}>Login</h1>
-          <div className={styles.wrapper}>
-            <div className={styles["textbox"]}>
-              <label htmlFor="username">username</label>
-              <input
-                type="text"
-                placeholder="山田　太郎"
-                name="username"
-                value={username}
-                onChange={(ev) => {
-                  setUsername(ev.currentTarget.value)
-                }}
-                required
-              />
-            </div>
-            <div className={styles["textbox"]}>
-              <label htmlFor="email">email</label>
-              <input
-                type="text"
-                placeholder="mail@example.com"
-                name="email"
-                value={email}
-                onChange={(ev) => {
-                  setEmail(ev.currentTarget.value)
-                }}
-                required
-              />
-            </div>
-            <div className={styles["textbox"]}>
-              <label htmlFor="password">password</label>
-              <input
-                type="password"
-                name="password"
-                value={password}
-                onChange={(ev) => {
-                  setPassword(ev.currentTarget.value)
-                }}
-                required
-              />
-            </div>
-            <button className={styles["button"]} type="submit">Create User</button>
+    <Layout title="user create page">
+      {/*TODO エラーの種類によってLayoutを描画するかどうか変更する*/}
+      {error && <ErrorMessage {...error} />}
+      <form
+        className={styles.form}
+        method="POST"
+        onSubmit={(ev) => {
+          createUser(accessToken, () => alert("success!"), setError, ev)
+        }}
+      >
+        <h1 className={styles.title}>Login</h1>
+        <div className={styles.wrapper}>
+          <div className={styles["textbox"]}>
+            <label htmlFor="username">username</label>
+            <input
+              type="text"
+              placeholder="山田　太郎"
+              name="username"
+              value={username}
+              onChange={(ev) => {
+                setUsername(ev.currentTarget.value)
+              }}
+              required
+            />
           </div>
-        </form>
-      </Layout>
-    </>
+          <div className={styles["textbox"]}>
+            <label htmlFor="email">email</label>
+            <input
+              type="text"
+              placeholder="mail@example.com"
+              name="email"
+              value={email}
+              onChange={(ev) => {
+                setEmail(ev.currentTarget.value)
+              }}
+              required
+            />
+          </div>
+          <div className={styles["textbox"]}>
+            <label htmlFor="password">password</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(ev) => {
+                setPassword(ev.currentTarget.value)
+              }}
+              required
+            />
+          </div>
+          <button className={styles["button"]} type="submit">Create User</button>
+        </div>
+      </form>
+    </Layout>
   )
 }
 
