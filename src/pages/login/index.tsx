@@ -24,7 +24,7 @@ const Login: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {error && <div className={styles.error}>{error.message}</div>}
+        {error && <strong className={styles.error}>{error.message}</strong>}
         <form
           className={styles.form}
           method="POST"
