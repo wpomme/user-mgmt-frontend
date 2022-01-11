@@ -1,12 +1,9 @@
-import { useState, FormEvent } from 'react'
+import { useState } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from './index.module.css'
 import { useRouter } from 'next/router'
-
-// TODO loginUserを移動する
-const backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT
-const backendDomain = process.env.NEXT_PUBLIC_BACKEND_DOMAIN
+import { loginUser } from '../../api/login-user'
 
 const Login: NextPage = () => {
   const [email, setName] = useState("")
@@ -14,33 +11,9 @@ const Login: NextPage = () => {
   const [error, setError] = useState<Error | null>(null)
   const router = useRouter()
 
-  const loginUser = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    const res = await fetch(
-      `http://${backendDomain}:${backendPort}/api/v1/login`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: event.currentTarget.email.value,
-          password: event.currentTarget.password.value,
-        }),
-      }
-    )
-
-    const result = await res.json()
-
-    if (res.status >= 400) {
-      setError(result)
-    }
-
-    if (res.status >= 200) {
-      sessionStorage.setItem('accessToken', result.access_token)
-      router.push('/')
-    }
+  const handleSuccess = (accessToken: string) => {
+    sessionStorage.setItem('accessToken', accessToken)
+    router.push('/')
   }
 
   return (
@@ -55,7 +28,9 @@ const Login: NextPage = () => {
         <form
           className={styles.form}
           method="POST"
-          onSubmit={loginUser}
+          onSubmit={(ev) => {
+            loginUser(handleSuccess, setError, ev)
+          }}
         >
           <h1 className={styles.title}>Login</h1>
           <div className={styles.wrapper}>
