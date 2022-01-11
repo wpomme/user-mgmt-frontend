@@ -30,7 +30,7 @@ const CreateUser: NextPage = () => {
           createUser(accessToken, () => alert("success!"), setError, ev)
         }}
       >
-        <h1 className={styles.title}>Login</h1>
+        <h1 className={styles.title}>ユーザー作成</h1>
         <div className={styles.wrapper}>
           <div className={styles["textbox"]}>
             <label htmlFor="username">username</label>

@@ -1,0 +1,9 @@
+.textbox {
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+}
+
+.wrapper > .button {
+  margin: 24px 0 0;
+}
