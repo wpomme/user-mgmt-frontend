@@ -14,9 +14,6 @@ export const SideBar: VFC = () => {
         <li className={styles['create-user']}>
           <Link href="/users/create">作成</Link>
         </li>
-        <li className={styles['create-user']}>
-          <Link href="#">削除</Link>
-        </li>
       </ul>
     </aside>
   );
