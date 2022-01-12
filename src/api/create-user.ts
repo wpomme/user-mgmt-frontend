@@ -26,7 +26,7 @@ export const createUser = async (
           password: event.currentTarget.password.value,
           userStatus: {
             connect: {
-              userStatus: "enable",
+              userStatus: event.currentTarget.userStatus.value,
             }
           },
         }
