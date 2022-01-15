@@ -8,6 +8,7 @@ import { createUser } from '../../../api/create-user'
 import { fetchAllUserStatus } from '../../../api/fetch-all-user-status'
 import { useFetch } from '../../../hooks/use-fetch'
 import { userStatusMap } from '../../../const'
+import { InputBox } from '../../../components/molecules/InputBox'
 
 interface UserStatusData {
   id: number
@@ -21,6 +22,7 @@ const CreateUser: NextPage = () => {
   const [createUserError, setCreateUserError] = useState<Error | null>(null)
   const router = useRouter()
 
+  // TODO accessTokenをcontextにする
   const accessToken = sessionStorage.getItem('accessToken')
   if (!accessToken) {
     router.push("/login")
@@ -32,6 +34,7 @@ const CreateUser: NextPage = () => {
     <Layout title="user create page">
       {/*TODO エラーの種類によってLayoutを描画するかどうか変更する*/}
       {createUserError && <ErrorMessage {...createUserError} />}
+      {/*TODO formのevent.currentTargetの値がInputBoxと依存していることを明示する*/}
       <form
         className={styles.form}
         method="POST"
@@ -41,54 +44,42 @@ const CreateUser: NextPage = () => {
       >
         <h1 className={styles.title}>ユーザー作成</h1>
         <div className={styles.wrapper}>
-          <div className={styles["textbox"]}>
-            <label htmlFor="username">username</label>
-            <input
-              type="text"
-              placeholder="山田　太郎"
-              name="username"
-              value={username}
-              onChange={(ev) => {
-                setUsername(ev.currentTarget.value)
-              }}
-              required
+          <InputBox
+            type="text"
+            labelName="名前"
+            name="username"
+            placeholder="山田　太郎"
+            value={username}
+            onChange={setUsername}
+            required
+          />
+          <InputBox
+            type="text"
+            labelName="Email"
+            placeholder="mail@example.com"
+            name="email"
+            value={email}
+            onChange={setEmail}
+            required
+          />
+          <InputBox
+            type="password"
+            labelName="Password"
+            name="password"
+            value={password}
+            onChange={setPassword}
+            autoComplete="current-password"
+          />
+          {data && (
+            <InputBox
+              type="select"
+              labelName="ユーザーステータス"
+              name="userStatus"
+              options={Object.fromEntries(data.data.map((v) => [
+                v.userStatus, userStatusMap.get(v.userStatus)
+              ]))}
             />
-          </div>
-          <div className={styles["textbox"]}>
-            <label htmlFor="email">email</label>
-            <input
-              type="text"
-              placeholder="mail@example.com"
-              name="email"
-              value={email}
-              onChange={(ev) => {
-                setEmail(ev.currentTarget.value)
-              }}
-              required
-            />
-          </div>
-          <div className={styles["textbox"]}>
-            <label htmlFor="password">password</label>
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(ev) => {
-                setPassword(ev.currentTarget.value)
-              }}
-              required
-            />
-          </div>
-          <div className={styles["textbox"]}>
-          <label htmlFor="userStatus">userStatus</label>
-            {data && (
-                <select name="userStatus">
-                  {data.data.map((data: any, i: number) => (
-                    <option key={i} value={data.userStatus}>{userStatusMap.get(data.userStatus)}</option>
-                  ))}
-                </select>
-            )}
-          </div>
+          )}
           <button className={styles["button"]} type="submit">作成</button>
         </div>
       </form>

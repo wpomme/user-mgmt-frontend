@@ -4,9 +4,10 @@ import styles from './index.module.css'
 import { useRouter } from 'next/router'
 import { loginUser } from '../../api/login-user'
 import { LayoutNoLogin } from '../../components/templates/LayoutNoLogin'
+import { InputBox } from '../../components/molecules/InputBox'
 
 const Login: NextPage = () => {
-  const [email, setName] = useState("")
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<Error | null>(null)
   const router = useRouter()
@@ -28,31 +29,23 @@ const Login: NextPage = () => {
       >
         <h1 className={styles.title}>Login</h1>
         <div className={styles.wrapper}>
-          <div className={styles["textbox"]}>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              placeholder="domain@example.com"
-              name="email"
-              value={email}
-              onChange={(ev) => {
-                setName(ev.currentTarget.value)
-              }}
-              required
-            />
-          </div>
-          <div className={styles["textbox"]}>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={password}
-              onChange={(ev) => {
-                setPassword(ev.currentTarget.value)
-              }}
-              required
-            />
-          </div>
+          <InputBox
+            type="text"
+            labelName="Email"
+            name="email"
+            placeholder="mail@example.com"
+            value={email}
+            onChange={setEmail}
+            required
+          />
+          <InputBox
+            type="password"
+            labelName="Password"
+            name="password"
+            value={password}
+            onChange={setPassword}
+            autoComplete="current-password"
+          />
           <button className={styles["button"]} type="submit">Login</button>
         </div>
       </form>
